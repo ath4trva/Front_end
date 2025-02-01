@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Customization</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0f172a;
+        color: #f8fafc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .popup {
+        background: #1e293b;
+        border-radius: 24px;
+        width: 90%;
+        max-width: 560px;
+        padding: 40px;
+        position: relative;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .popup::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 24px;
+        padding: 2px;
+        background: linear-gradient(45deg, #3b82f6 0%, #10b981 100%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+      }
+
+      h2 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        background: linear-gradient(45deg, #3b82f6, #10b981);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      p {
+        color: #94a3b8;
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 32px;
+      }
+
+      .radio-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 32px;
+      }
+
+      .radio-item {
+        position: relative;
+      }
+
+      .radio-item input {
+        position: absolute;
+        opacity: 0;
+        height: 0;
+        width: 0;
+      }
+
+      .radio-item label {
+        display: flex;
+        align-items: center;
+        padding: 18px 24px;
+        background: #334155;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .radio-item label:hover {
+        background: #475569;
+        transform: translateY(-2px);
+      }
+
+      .radio-item input:checked + label {
+        background: rgba(59, 130, 246, 0.15);
+        border-color: #3b82f6;
+      }
+
+      .custom-radio {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #64748b;
+        border-radius: 50%;
+        margin-right: 16px;
+        position: relative;
+        transition: all 0.2s ease;
+      }
+
+      .radio-item input:checked + label .custom-radio {
+        border-color: #3b82f6;
+        background: rgba(59, 130, 246, 0.2);
+      }
+
+      .custom-radio::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 10px;
+        background: #3b82f6;
+        border-radius: 50%;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .radio-item input:checked + label .custom-radio::after {
+        opacity: 1;
+      }
+
+      button {
+        background: linear-gradient(45deg, #3b82f6, #10b981);
+        color: white;
+        border: none;
+        padding: 16px 32px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.2s ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="popup">
+      <h2>Health Preferences</h2>
+      <p>Select your primary health condition from the options below:</p>
+
+      <div class="radio-list">
+        <div class="radio-item">
+          <input type="radio" name="health_condition" value="none" id="none" />
+          <label for="none">
+            <span class="custom-radio"></span>
+            None
+          </label>
+        </div>
+
+        <div class="radio-item">
+          <input
+            type="radio"
+            name="health_condition"
+            value="asthma"
+            id="asthma"
+          />
+          <label for="asthma">
+            <span class="custom-radio"></span>
+            Asthma
+          </label>
+        </div>
+
+        <div class="radio-item">
+          <input type="radio" name="health_condition" value="copd" id="copd" />
+          <label for="copd">
+            <span class="custom-radio"></span>
+            COPD
+          </label>
+        </div>
+
+        <div class="radio-item">
+          <input
+            type="radio"
+            name="health_condition"
+            value="bronchitis"
+            id="bronchitis"
+          />
+          <label for="bronchitis">
+            <span class="custom-radio"></span>
+            Bronchitis
+          </label>
+        </div>
+
+        <div class="radio-item">
+          <input
+            type="radio"
+            name="health_condition"
+            value="sinusitis"
+            id="sinusitis"
+          />
+          <label for="sinusitis">
+            <span class="custom-radio"></span>
+            Sinusitis
+          </label>
+        </div>
+
+        <div class="radio-item">
+          <input
+            type="radio"
+            name="health_condition"
+            value="eczema"
+            id="eczema"
+          />
+          <label for="eczema">
+            <span class="custom-radio"></span>
+            Eczema
+          </label>
+        </div>
+      </div>
+
+      <button>Save Preferences</button>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AQI Forecast</title>
+    
+    <!-- External Resources -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  </head>
+
+  <body>
+    <!-- Navigation Header -->
+    <header>
+      <div class="logo">AirAware</div>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Map</a>
+        <a href="#">Index</a>
+        <a href="#">Solution</a>
+      </nav>
+    </header>
+
+    <div class="forecast-dashboard">
+        <div class="forecast-header">AQI Forecast</div>
+
+        <!-- Table -->
+        <div class="forecast-table">
+            <div>
+                <div class="forecast-day">Sat</div>
+                <div class="forecast-aqi">120</div>
+            </div>
+            <div>
+                <div class="forecast-day">Sun</div>
+                <div class="forecast-aqi">100</div>
+            </div>
+            <div>
+                <div class="forecast-day">Mon</div>
+                <div class="forecast-aqi">90</div>
+            </div>
+            <div>
+                <div class="forecast-day">Tue</div>
+                <div class="forecast-aqi">80</div>
+            </div>
+            <div>
+                <div class="forecast-day">Wed</div>
+                <div class="forecast-aqi">70</div>
+            </div>
+            <div>
+                <div class="forecast-day">Thu</div>
+                <div class="forecast-aqi">100</div>
+            </div>
+            <div>
+                <div class="forecast-day">Fri</div>
+                <div class="forecast-aqi">110</div>
+            </div>
+            <div>
+                <div class="forecast-day">Sat</div>
+                <div class="forecast-aqi">120</div>
+            </div>
+        </div>
+    </div>
+      
+
+ 
+
+      <!-- Dashboard Info -->
+      <div class="dashboard">
+        <div class="dashboard-content">
+          <!-- Left Section -->
+          <div class="dashboard-left">
+            <div class="header">
+              <div>
+                <div class="location">
+                  <a href="#">Mumbai, Maharashtra, India</a>
+                </div>
+                <div class="last-updated">Last Updated: 8 minutes ago</div>
+              </div>
+              <button id="locateBtn">Locate me</button>
+            </div>
+  
+            <div class="main-content">
+              <div class="aqi-section">
+                <div class="aqi-label">Live AQI</div>
+                <div class="live-aqi" id="aqiValue">142</div>
+                <div class="aqi-status" id="aqiStatus">Poor</div>
+                <div class="pm-values">
+                  PM10: 155 µg/m³ &nbsp;&nbsp;&nbsp; PM2.5: 59 µg/m³
+                </div>
+                <div class="aqi-scale">
+                  <div class="aqi-marker" id="aqiMarker"></div>
+                </div>
+                <div class="scale-labels">
+                  <span>0</span>
+                  <span>50</span>
+                  <span>100</span>
+                  <span>150</span>
+                  <span>200</span>
+                  <span>250</span>
+                  <span>300+</span>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Right Section (Heatmap) -->
+          <div class="dashboard-right">
+            <div class="map-container">
+              <div class="legend">
+                <h3>Air Quality Index</h3>
+                <div class="legend-items">
+                  <div class="legend-item">
+                    <div class="color-box" style="background: #00e400"></div>
+                    <span>Good (0-50)</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="color-box" style="background: #ffff00"></div>
+                    <span>Moderate (51-100)</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="color-box" style="background: #ff7e00"></div>
+                    <span>Unhealthy for Sensitive Groups (101-150)</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="color-box" style="background: #ff0000"></div>
+                    <span>Unhealthy (151-200)</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="color-box" style="background: #99004c"></div>
+                    <span>Very Unhealthy (201-300)</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="color-box" style="background: #7e0023"></div>
+                    <span>Hazardous (301+)</span>
+                  </div>
+                </div>
+              </div>
+              <div id="map"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    
+
+      <!-- Graph Section -->
+      <h2 class="graph-heading">Graphical Representation</h2>
+      <div class="graph-container">
+        <h2>AQI Graph</h2>
+        <div class="subtitle">Historical Air Quality Data</div>
+        <div class="location">Mumbai</div>
+
+        <div class="controls">
+          <div class="graph-buttons">
+            <button class="active" onclick="toggleChart('bar')">Bar Graph</button>
+            <button onclick="toggleChart('line')">Line Graph</button>
+          </div>
+          <div class="dropdowns">
+            <select id="timeRange">
+              <option>24 Hours</option>
+              <option>7 Days</option>
+              <option>30 Days</option>
+            </select>
+            <select id="metric">
+              <option>AQI</option>
+              <option>PM2.5</option>
+              <option>PM10</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="barChart"></canvas>
+          <canvas id="lineChart" style="display: none"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Major Pollutants Section -->
+    <section class="hero-section">
+        <h2 class="card-heading">Current Air Pollutants in Mumbai</h2>
+        <div class="card-grid">
+          <div class="card">
+            <div class="card__background" style="background-image: url(https://t4.ftcdn.net/jpg/02/92/90/07/360_F_292900783_Ng0hoIGBajErJQGW2Rkf2V2d5hFoZqqm.jpg)"></div>
+            <div class="card__content">
+              <p class="card__category">Particulate Matter</p>
+              <h3 class="card__heading">PM2.5</h3>
+              <p class="value" id="pm25-value">-</p>
+              <p class="unit">µg/m³</p>
+            </div>
+          </div>
+  
+          <div class="card">
+            <div class="card__background" style="background-image: url(https://cdn.shopify.com/s/files/1/0677/4059/8571/articles/PM10_Desk_b_517d20da-4aa5-4cb5-af95-02209ae0e377.jpg?v=1705573953)"></div>
+            <div class="card__content">
+              <p class="card__category">Particulate Matter</p>
+              <h3 class="card__heading">PM10</h3>
+              <p class="value" id="pm10-value">-</p>
+              <p class="unit">µg/m³</p>
+            </div>
+          </div>
+  
+          <div class="card">
+            <div class="card__background" style="background-image: url(https://www.breeze-technologies.de/wp-content/uploads/2021/12/andreas-felske-oQEdDIMEIlc-unsplash-scaled.jpg)"></div>
+            <div class="card__content">
+              <p class="card__category">Carbon Monoxide</p>
+              <h3 class="card__heading">CO</h3>
+              <p class="value" id="co-value">-</p>
+              <p class="unit">ppm</p>
+            </div>
+          </div>
+  
+          <div class="card">
+            <div class="card__background" style="background-image: url(https://etimg.etb2bimg.com/thumb/msid-73053424,width-1200,resizemode-4/.jpg)"></div>
+            <div class="card__content">
+              <p class="card__category">Sulphur Dioxide</p>
+              <h3 class="card__heading">SO₂</h3>
+              <p class="value" id="so2-value">-</p>
+              <p class="unit">ppm</p>
+            </div>
+          </div>
+  
+          <div class="card">
+            <div class="card__background" style="background-image: url(https://e7552ege7qf.exactdn.com/wp-content/uploads/2021/07/the-basics-of-detecting-nitrogen-dioxide-thumbnail-1.jpg?strip=all&lossy=1&ssl=1)"></div>
+            <div class="card__content">
+              <p class="card__category">Nitrogen Dioxide</p>
+              <h3 class="card__heading">NO₂</h3>
+              <p class="value" id="no2-value">-</p>
+              <p class="unit">ppm</p>
+            </div>
+          </div>
+  
+          <div class="card">
+            <div class="card__background" style="background-image: url(https://media.istockphoto.com/id/482110960/photo/view-of-earth-from-space.jpg?s=612x612&w=0&k=20&c=we-xY9bhrbsrPSoNfahzMozoSUavdybJ3ycDLihc9OU=)"></div>
+            <div class="card__content">
+              <p class="card__category">Ozone</p>
+              <h3 class="card__heading">O₃</h3>
+              <p class="value" id="o3-value">-</p>
+              <p class="unit">ppm</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+  
+
+    <!-- Slider Section -->
+    <div class="main-wrapper">
+        <h2>Air Quality Tips & Facts</h2>
+        <div class="card-container">
+          <input type="radio" name="slider" id="s1" checked>
+          <label for="s1" class="flex-card">
+            <div class="card-content">
+              <div class="image-icon">1</div>
+              <div class="text-description">
+                <h4>Advice:</h4>
+                <p> Plant trees to naturally filter and clean the air.</p>
+              </div>
+            </div>
+          </label>
+      
+          <input type="radio" name="slider" id="s2">
+          <label for="s2" class="flex-card">
+            <div class="card-content">
+              <div class="image-icon">2</div>
+              <div class="text-description">
+                <h4>Advice:</h4>
+                <p> Use public transport or carpool to reduce vehicle emissions and improve air quality.</p>
+              </div>
+            </div>
+          </label>
+      
+          <input type="radio" name="slider" id="s3">
+          <label for="s3" class="flex-card">
+            <div class="card-content">
+              <div class="image-icon">3</div>
+              <div class="text-description">
+                <h4>Fun Fact:</h4>
+                <p> Indoor air can be 5x more polluted than outdoor air.</p>
+              </div>
+            </div>
+          </label>
+      
+          <input type="radio" name="slider" id="s4">
+          <label for="s4" class="flex-card">
+            <div class="card-content">
+              <div class="image-icon">4</div>
+              <div class="text-description">
+                <h4>Fun Fact</h4>
+                <p>Rain cleans the air by trapping and removing pollutants.</p>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+        
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+      <script src="app.js"></script>
+      
+      
+      
+      <script>
+        // Function to get AQI data from Open Meteo API
+        function getAQI(latitude, longitude) {
+    // Use the correct API endpoint for air quality data
+    const apiUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${latitude}&longitude=${longitude}&current=us_aqi&timezone=auto`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            console.log("API Response:", data); // Log the entire API response
+
+            // Check if the air quality data exists
+            if (!data.current || !data.current.us_aqi) {
+                throw new Error("Air quality data not available");
+            }
+
+            // Get the current AQI value
+            const aqi = data.current.us_aqi;
+
+            let aqiStatus = '';
+            if (aqi <= 50) {
+                aqiStatus = 'Good';
+            } else if (aqi <= 100) {
+                aqiStatus = 'Moderate';
+            } else if (aqi <= 150) {
+                aqiStatus = 'Unhealthy for Sensitive Groups';
+            } else if (aqi <= 200) {
+                aqiStatus = 'Unhealthy';
+            } else if (aqi <= 300) {
+                aqiStatus = 'Very Unhealthy';
+            } else {
+                aqiStatus = 'Hazardous';
+            }
+
+            // Display AQI on the page
+            document.getElementById('aqiValue').innerText = aqi;
+            document.getElementById('aqiStatus').innerText = aqiStatus;
+            document.getElementById('aqiMarker').style.width = `${(aqi / 300) * 100}%`; // Scale the marker based on AQI
+        })
+        .catch(error => {
+            console.error('Error fetching AQI data:', error);
+            alert("Error fetching AQI data. Please try again later.");
+        });
+}
+
+        // Function to get user's current location
+        function locateUser() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+
+                    // Fetch and display the AQI for the user's location
+                    getAQI(latitude, longitude);
+                }, function(error) {
+                    console.error('Error retrieving location:', error);
+                    alert('Unable to retrieve location.');
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        // Add event listener to the Locate Me button
+        document.getElementById('locateBtn').addEventListener('click', locateUser);
+    </script>
+
+    <script src="app.js"></script>
+  </body>
+</html>
