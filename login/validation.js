@@ -5,13 +5,13 @@ import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBKH7ZfeeG_z4QzctkghEq94rD5_jpmxPo",
-  authDomain: "rideordie-991c1.firebaseapp.com",
-  projectId: "rideordie-991c1",
-  storageBucket: "rideordie-991c1.appspot.com",
-  messagingSenderId: "1014763811457",
-  appId: "1:1014763811457:web:547278024bf445bde11380",
-  measurementId: "G-XF11CM64DZ"
+  apiKey: "",
+  authDomain: "rideo.firebaseapp.com",
+  projectId: "rideor91c1",
+  storageBucket: "-991c1.appspot.com",
+  messagingSenderId: "",
+  appId: "1:1014763811457:web:",
+  measurementId: "G-"
 };
 
 // Initialize Firebase
